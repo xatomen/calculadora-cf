@@ -22,6 +22,11 @@ jobs:
       - name: Compilar 
         run: dotnet build --no-restore
 
+      - name: Saludar
+        uses: xatomen/Clase-5-Bootcamp-Actions@v1.0
+        with:
+          who-to-greet: 'Jorge'
+
   crear-pdf:
     runs-on: ubuntu-latest
     steps:
