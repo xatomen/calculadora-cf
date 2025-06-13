@@ -1,0 +1,46 @@
+name: Compila y Genera PDF
+
+on:
+  push:
+
+jobs:
+  compila:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Setup .NET en el runner
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Instalar dependencias
+        run: dotnet restore
+
+      - name: Compilar 
+        run: dotnet build --no-restore
+
+  crear-pdf:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Markdown to PDF
+        uses: baileyjm02/markdown-to-pdf@v1
+        with:
+          input_dir: docs
+          output_dir: pdfs
+          build_html: true
+      
+      - name: Upload PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: pdfs
+
+
+      
